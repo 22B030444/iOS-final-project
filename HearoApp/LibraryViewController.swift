@@ -48,6 +48,7 @@ class LibraryViewController: UIViewController {
     }
     
     @IBAction func downloadsTapped(_ sender: UITapGestureRecognizer) {
+        performSegue(withIdentifier: "showDownloads", sender: nil)
         print("Downloads tapped")
     }
     

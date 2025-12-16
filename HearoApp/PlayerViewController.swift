@@ -20,6 +20,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var shuffleButton: UIButton!
     @IBOutlet weak var repeatButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var downloadButton: UIButton!
 
     var track: Track?
     var tracks: [Track] = []
@@ -77,6 +78,7 @@ class PlayerViewController: UIViewController {
         updateShuffleButton()
         updateRepeatButton()
         updateLikeButton()
+        updateDownloadButton()
     }
     
     private func loadImage(from url: URL) {
@@ -174,12 +176,15 @@ class PlayerViewController: UIViewController {
         likeButton.setImage(UIImage(systemName: imageName), for: .normal)
         likeButton.tintColor = isLiked ? UIColor(named: "AccentPurple") : .white
     }
-
-    private func showAddedAlert(playlistName: String) {
-        let alert = UIAlertController(title: "Added!", message: "Track added to \(playlistName)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+    private func updateDownloadButton() {
+        guard let track = track else { return }
+        let isDownloaded = DownloadsManager.shared.isDownloaded(track)
+        let imageName = isDownloaded ? "arrow.down.circle.fill" : "arrow.down.circle"
+        downloadButton.setImage(UIImage(systemName: imageName), for: .normal)
+        downloadButton.tintColor = isDownloaded ? UIColor(named: "AccentPurple") : .white
+        
     }
+
     
     private func playTrack(at index: Int) {
         guard index >= 0 && index < tracks.count else { return }
@@ -260,6 +265,20 @@ class PlayerViewController: UIViewController {
         
         present(alert, animated: true)
     }
+    private func showAddedAlert(playlistName: String) {
+        let alert = UIAlertController(title: "Added!", message: "Track added to \(playlistName)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    private func showDownloadAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        present(alert, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            alert.dismiss(animated: true)
+        }
+    }
+    
     // MARK: - Actions
     @IBAction func artistNameTapped(_ sender: UITapGestureRecognizer) {
         performSegue(withIdentifier: "showArtistFromPlayer", sender: nil)
@@ -278,6 +297,23 @@ class PlayerViewController: UIViewController {
         }
         
         updateLikeButton()
+    }
+    @IBAction func downloadTapped(_ sender: UIButton) {
+        guard let track = track else { return }
+        
+        let wasDownloaded = DownloadsManager.shared.toggleDownload(track)
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                sender.transform = .identity
+            }
+        }
+        
+        updateDownloadButton()
+        let message = wasDownloaded ? "Downloaded" : "Removed from downloads"
+        showDownloadAlert(message: message)
     }
     
     @IBAction func menuTapped(_ sender: UIButton) {

@@ -21,7 +21,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gradient" translatesAutoresizingMaskIntoConstraints="NO" id="Phy-rQ-wZy">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XDR-0l-x0r">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XDR-0l-x0r">
                                 <rect key="frame" x="0.0" y="103" width="393" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="ho7-Sh-aWw"/>
@@ -128,7 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ifK-xP-zCS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5282" y="2527"/>
+            <point key="canvasLocation" x="5434" y="2693"/>
         </scene>
         <!--Player View Controller-->
         <scene sceneID="Bk0-xR-azf">
@@ -195,6 +195,9 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="arrow.down.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="downloadTapped:" destination="Aep-Nl-2CG" eventType="touchUpInside" id="PSq-0f-Rdo"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lki-Sl-dPm">
                                 <rect key="frame" x="318.33333333333331" y="488.33333333333331" width="50.666666666666686" height="34.333333333333314"/>
@@ -328,6 +331,7 @@
                         <outlet property="artistNameLabel" destination="GYf-Oh-WNY" id="l0g-oJ-tVG"/>
                         <outlet property="artworkImageView" destination="71f-KT-iNg" id="4Tn-Y8-K48"/>
                         <outlet property="currentTimeLabel" destination="kzH-a6-w3Q" id="YK9-5d-YHq"/>
+                        <outlet property="downloadButton" destination="VFb-lj-Zf0" id="cKh-Qn-Adr"/>
                         <outlet property="durationLabel" destination="PzJ-85-M3s" id="qNJ-93-l8d"/>
                         <outlet property="likeButton" destination="Lki-Sl-dPm" id="P0e-Ks-xL0"/>
                         <outlet property="playPauseButton" destination="q5H-2k-NLb" id="XPU-1G-xAB"/>
@@ -902,7 +906,7 @@
                         <segue destination="L4x-oj-VVG" kind="show" identifier="showPlaylists" id="if9-7k-Pqa"/>
                         <segue destination="Kz4-uE-TNW" kind="show" identifier="showArtists" id="V49-Lw-HFU"/>
                         <segue destination="fra-QS-4h4" kind="show" identifier="showLikedSongs" id="Enn-p5-HxG"/>
-                        <segue destination="rUv-iw-eEX" kind="show" id="mdL-Hi-raC"/>
+                        <segue destination="rUv-iw-eEX" kind="show" identifier="showDownloads" id="mdL-Hi-raC"/>
                         <segue destination="Aep-Nl-2CG" kind="presentation" identifier="showPlayerFromLibrary" id="CpH-bG-t4m"/>
                         <segue destination="wp7-ht-aPh" kind="show" identifier="showProfileFromLibrary" id="KOL-TW-hnG"/>
                     </connections>
@@ -1274,21 +1278,71 @@
             </objects>
             <point key="canvasLocation" x="5282" y="1682"/>
         </scene>
-        <!--View Controller-->
+        <!--Downloads View Controller-->
         <scene sceneID="dEd-jp-Dcw">
             <objects>
-                <viewController id="rUv-iw-eEX" sceneMemberID="viewController">
+                <viewController id="rUv-iw-eEX" customClass="DownloadsViewController" customModule="HearoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fZM-Y1-oHb">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gradient" translatesAutoresizingMaskIntoConstraints="NO" id="sZf-7c-Wbx">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloads" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z7-eX-hUD">
+                                <rect key="frame" x="16" y="119" width="126" height="33"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" placeholder="Search song, playlist, artist..." id="6VZ-BZ-F1a">
+                                <rect key="frame" x="0.0" y="162" width="393" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.1386944007" green="0.1178752552" blue="0.18361328120000001" alpha="0.89792209199999995" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="dtI-hn-0Ys" id="OJw-T3-3kt"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Q2k-TS-GCa">
+                                <rect key="frame" x="0.0" y="228" width="393" height="541"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="p2E-Xz-vQs"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Q2k-TS-GCa" firstAttribute="leading" secondItem="p2E-Xz-vQs" secondAttribute="leading" id="6cb-aQ-pFG"/>
+                            <constraint firstItem="sZf-7c-Wbx" firstAttribute="leading" secondItem="fZM-Y1-oHb" secondAttribute="leading" id="Abw-Lw-aFq"/>
+                            <constraint firstAttribute="trailing" secondItem="sZf-7c-Wbx" secondAttribute="trailing" id="Cu2-sQ-hWE"/>
+                            <constraint firstItem="8z7-eX-hUD" firstAttribute="leading" secondItem="p2E-Xz-vQs" secondAttribute="leading" constant="16" id="IQX-WG-dSi"/>
+                            <constraint firstItem="6VZ-BZ-F1a" firstAttribute="top" secondItem="8z7-eX-hUD" secondAttribute="bottom" constant="10" id="Uuo-Tf-kZ9"/>
+                            <constraint firstItem="sZf-7c-Wbx" firstAttribute="top" secondItem="fZM-Y1-oHb" secondAttribute="top" id="Vqb-6a-5az"/>
+                            <constraint firstItem="p2E-Xz-vQs" firstAttribute="bottom" secondItem="Q2k-TS-GCa" secondAttribute="bottom" id="bId-fG-feb"/>
+                            <constraint firstItem="Q2k-TS-GCa" firstAttribute="top" secondItem="6VZ-BZ-F1a" secondAttribute="bottom" constant="10" id="fQe-YO-1ck"/>
+                            <constraint firstItem="p2E-Xz-vQs" firstAttribute="trailing" secondItem="Q2k-TS-GCa" secondAttribute="trailing" id="hLj-F1-MNq"/>
+                            <constraint firstItem="8z7-eX-hUD" firstAttribute="top" secondItem="p2E-Xz-vQs" secondAttribute="top" constant="16" id="ppW-N7-hS7"/>
+                            <constraint firstAttribute="bottom" secondItem="sZf-7c-Wbx" secondAttribute="bottom" id="qEa-I6-4av"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="NcW-E3-uHS"/>
+                    <connections>
+                        <outlet property="searchBar" destination="6VZ-BZ-F1a" id="UiM-Mh-trK"/>
+                        <outlet property="tableView" destination="Q2k-TS-GCa" id="2pH-hb-E2I"/>
+                        <segue destination="Aep-Nl-2CG" kind="presentation" identifier="showPlayerFromDownloads" id="D9i-s6-8fx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yrb-yZ-mFq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8205" y="1682"/>
+            <point key="canvasLocation" x="8203.8167938931292" y="1681.6901408450706"/>
         </scene>
         <!--Liked Songs View Controller-->
         <scene sceneID="C3X-fK-BQg">
@@ -1902,7 +1956,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="KOL-TW-hnG"/>
-        <segue reference="EoD-q3-flL"/>
+        <segue reference="die-S2-jN6"/>
         <segue reference="JbD-Q1-n2d"/>
     </inferredMetricsTieBreakers>
     <resources>
