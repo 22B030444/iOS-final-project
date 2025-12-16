@@ -77,6 +77,10 @@ class LibraryViewController: UIViewController {
         performSegue(withIdentifier: "showProfileFromLibrary", sender: nil)
         print("Profile tapped")
     }
+    @IBAction func albumsTapped(_ sender: UITapGestureRecognizer) {
+        performSegue(withIdentifier: "showAlbums", sender: nil)
+        print("Albums tapped")
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
