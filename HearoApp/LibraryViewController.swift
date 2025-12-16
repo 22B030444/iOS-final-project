@@ -28,19 +28,31 @@ class LibraryViewController: UIViewController {
     }
     
     private func loadRecentlyPlayed() {
-        NetworkManager.shared.searchTracks(query: "imagine dragons") { [weak self] result in
-            switch result {
-            case .success(let tracks):
-                self?.recentlyPlayed = Array(tracks.prefix(10))
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+        let recentTracks = PlayHistoryManager.shared.getRecentlyPlayedTracks(limit: 10)
+        
+        if !recentTracks.isEmpty {
+            self.recentlyPlayed = recentTracks
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } else {
+            NetworkManager.shared.searchTracks(query: "imagine dragons") { [weak self] result in
+                switch result {
+                case .success(let tracks):
+                    self?.recentlyPlayed = Array(tracks.prefix(10))
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
                 }
-            case .failure(let error):
-                print("Error: \(error)")
             }
         }
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadRecentlyPlayed()
+    }
     // MARK: - Menu Actions
     @IBAction func playlistsTapped(_ sender: UITapGestureRecognizer) {
         performSegue(withIdentifier: "showPlaylists", sender: nil)

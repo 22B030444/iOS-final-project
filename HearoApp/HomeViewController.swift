@@ -53,15 +53,23 @@ class HomeViewController: UIViewController {
             }
         }
         
-        NetworkManager.shared.searchTracks(query: "chainsmokers") { [weak self] result in
-            switch result {
-            case .success(let tracks):
-                self?.recentlyPlayedTracks = tracks
-                DispatchQueue.main.async {
-                    self?.recentlyPlayedCollectionView.reloadData()
+        let recentTracks = PlayHistoryManager.shared.getRecentlyPlayedTracks(limit: 20)
+        if !recentTracks.isEmpty {
+            self.recentlyPlayedTracks = recentTracks
+            DispatchQueue.main.async {
+                self.recentlyPlayedCollectionView.reloadData()
+            }
+        } else {
+            NetworkManager.shared.searchTracks(query: "chainsmokers") { [weak self] result in
+                switch result {
+                case .success(let tracks):
+                    self?.recentlyPlayedTracks = tracks
+                    DispatchQueue.main.async {
+                        self?.recentlyPlayedCollectionView.reloadData()
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
                 }
-            case .failure(let error):
-                print("Error: \(error)")
             }
         }
         
@@ -75,6 +83,15 @@ class HomeViewController: UIViewController {
             case .failure(let error):
                 print("Error: \(error)")
             }
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let recentTracks = PlayHistoryManager.shared.getRecentlyPlayedTracks(limit: 20)
+        if !recentTracks.isEmpty {
+            self.recentlyPlayedTracks = recentTracks
+            self.recentlyPlayedCollectionView.reloadData()
         }
     }
     @IBAction func profileTapped(_ sender: UITapGestureRecognizer) {
@@ -126,15 +143,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         performSegue(withIdentifier: "showPlayerFromHome", sender: (tracks, index))
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showPlayerFromHome",
-           let playerVC = segue.destination as? PlayerViewController,
-           let (tracks, index) = sender as? ([Track], Int) {
-            playerVC.tracks = tracks
-            playerVC.currentIndex = index
-            playerVC.track = tracks[index]
-        }
-    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -152,6 +160,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         return 12
     }
 }
-    
-
-
+extension HomeViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showPlayerFromHome",
+           let playerVC = segue.destination as? PlayerViewController,
+           let (tracks, index) = sender as? ([Track], Int) {
+            playerVC.tracks = tracks
+            playerVC.currentIndex = index
+            playerVC.track = tracks[index]
+        }
+    }
+}

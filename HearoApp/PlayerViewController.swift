@@ -103,7 +103,7 @@ class PlayerViewController: UIViewController {
         }
         
         player = AVPlayer(url: url)
-        
+        PlayHistoryManager.shared.addTrack(track)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(trackDidFinish),
