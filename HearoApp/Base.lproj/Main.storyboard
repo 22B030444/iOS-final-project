@@ -1524,7 +1524,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="r0L-1Z-EgV"/>
                     <connections>
-                        <outlet property="tableView" destination="YmO-ay-lAG" id="ebo-zU-YNo"/>
+                        <outlet property="searchBar" destination="Ebf-eA-b8K" id="DC2-FK-sKL"/>
+                        <outlet property="tableView" destination="YmO-ay-lAG" id="DiT-NK-bOk"/>
                         <segue destination="Aep-Nl-2CG" kind="presentation" identifier="showPlayerFromLiked" id="EoD-q3-flL"/>
                     </connections>
                 </viewController>
@@ -2180,7 +2181,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="R2f-xS-DYF"/>
         <segue reference="iQe-L5-2hC"/>
-        <segue reference="QPN-Le-YNY"/>
+        <segue reference="EoD-q3-flL"/>
         <segue reference="JbD-Q1-n2d"/>
     </inferredMetricsTieBreakers>
     <resources>
