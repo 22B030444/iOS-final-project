@@ -12,10 +12,12 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var featuringCollectionView: UICollectionView!
     @IBOutlet weak var recentlyPlayedCollectionView: UICollectionView!
     @IBOutlet weak var mixesCollectionView: UICollectionView!
+    @IBOutlet weak var albumsCollectionView: UICollectionView!
     
     private var featuringTracks: [Track] = []
     private var recentlyPlayedTracks: [Track] = []
     private var mixesTracks: [Track] = []
+    private var albums: [Album] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,7 @@ class HomeViewController: UIViewController {
         featuringCollectionView.register(nib, forCellWithReuseIdentifier: "TrackCell")
         recentlyPlayedCollectionView.register(nib, forCellWithReuseIdentifier: "TrackCell")
         mixesCollectionView.register(nib, forCellWithReuseIdentifier: "TrackCell")
+        albumsCollectionView.register(nib, forCellWithReuseIdentifier: "AlbumCell")
         
         featuringCollectionView.delegate = self
         featuringCollectionView.dataSource = self
@@ -38,9 +41,13 @@ class HomeViewController: UIViewController {
         
         mixesCollectionView.delegate = self
         mixesCollectionView.dataSource = self
+        
+        albumsCollectionView.delegate = self
+        albumsCollectionView.dataSource = self
     }
     
     private func loadData() {
+    
         NetworkManager.shared.searchTracks(query: "top hits 2024") { [weak self] result in
             switch result {
             case .success(let tracks):
@@ -52,7 +59,7 @@ class HomeViewController: UIViewController {
                 print("Error: \(error)")
             }
         }
-        
+   
         let recentTracks = PlayHistoryManager.shared.getRecentlyPlayedTracks(limit: 20)
         if !recentTracks.isEmpty {
             self.recentlyPlayedTracks = recentTracks
@@ -72,7 +79,7 @@ class HomeViewController: UIViewController {
                 }
             }
         }
-        
+            
         NetworkManager.shared.searchTracks(query: "martin garrix") { [weak self] result in
             switch result {
             case .success(let tracks):
@@ -84,16 +91,30 @@ class HomeViewController: UIViewController {
                 print("Error: \(error)")
             }
         }
+
+        NetworkManager.shared.searchAlbums(query: "pop 2024") { [weak self] result in
+            switch result {
+            case .success(let albums):
+                self?.albums = albums
+                DispatchQueue.main.async {
+                    self?.albumsCollectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Error loading albums: \(error)")
+            }
+        }
     }
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+            
         let recentTracks = PlayHistoryManager.shared.getRecentlyPlayedTracks(limit: 20)
         if !recentTracks.isEmpty {
             self.recentlyPlayedTracks = recentTracks
             self.recentlyPlayedCollectionView.reloadData()
         }
     }
+    
     @IBAction func profileTapped(_ sender: UITapGestureRecognizer) {
         performSegue(withIdentifier: "showProfileFromHome", sender: nil)
     }
@@ -107,12 +128,37 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return featuringTracks.count
         } else if collectionView == recentlyPlayedCollectionView {
             return recentlyPlayedTracks.count
-        } else {
+        } else if collectionView == mixesCollectionView {
             return mixesTracks.count
+        } else if collectionView == albumsCollectionView {
+            return albums.count
         }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if collectionView == albumsCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCell", for: indexPath) as! TrackCollectionViewCell
+            let album = albums[indexPath.item]
+            
+            cell.trackNameLabel.text = album.collectionName ?? "Unknown Album"
+            cell.artistNameLabel.text = album.artistName ?? "Unknown Artist"
+            
+            if let urlString = album.artworkUrl600,
+               let url = URL(string: urlString) {
+                URLSession.shared.dataTask(with: url) { data, _, _ in
+                    if let data = data, let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            cell.artworkImageView.image = image
+                        }
+                    }
+                }.resume()
+            }
+            
+            return cell
+        }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrackCell", for: indexPath) as! TrackCollectionViewCell
         
         let track: Track
@@ -129,6 +175,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if collectionView == albumsCollectionView {
+            let album = albums[indexPath.item]
+            performSegue(withIdentifier: "showAlbumFromHome", sender: album)
+            return
+        }
+        
         let tracks: [Track]
         let index = indexPath.item
         
@@ -142,7 +195,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         performSegue(withIdentifier: "showPlayerFromHome", sender: (tracks, index))
     }
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -160,6 +212,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         return 12
     }
 }
+
+// MARK: - Navigation
 extension HomeViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showPlayerFromHome",
@@ -168,6 +222,12 @@ extension HomeViewController {
             playerVC.tracks = tracks
             playerVC.currentIndex = index
             playerVC.track = tracks[index]
+        }
+        
+        if segue.identifier == "showAlbumFromHome",
+           let albumVC = segue.destination as? AlbumViewController,
+           let album = sender as? Album {
+            albumVC.album = album
         }
     }
 }
