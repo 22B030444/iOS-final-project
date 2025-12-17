@@ -51,8 +51,9 @@ extension ArtistsViewController: UICollectionViewDelegate, UICollectionViewDataS
            let nameLabel = cell.viewWithTag(101) as? UILabel {
             
             nameLabel.text = artist.name
-            imageView.layer.cornerRadius = imageView.frame.width / 2
+            imageView.layer.cornerRadius = 40
             imageView.clipsToBounds = true
+            imageView.contentMode = .scaleAspectFill
             imageView.image = UIImage(systemName: "person.circle.fill")
             imageView.tintColor = UIColor(named: "AccentPurple")
          
@@ -81,12 +82,22 @@ extension ArtistsViewController: UICollectionViewDelegate, UICollectionViewDataS
 extension ArtistsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 48) / 3
+        let spacing: CGFloat = 8
+        let totalSpacing = spacing * 2 + 32 
+        let width = floor((collectionView.frame.width - totalSpacing) / 3)
         return CGSize(width: width, height: width + 30)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 16
     }
 }
 
