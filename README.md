@@ -161,7 +161,7 @@ This app uses the [iTunes Search API](https://developer.apple.com/library/archiv
 
 | Color Name | Hex Code | Usage |
 |------------|----------|-------|
-| BackgroundDark | `#1A1A2E` | Main background |
+| BackgroundDark | `#1E152E` | Main background |
 | AccentPurple | `#9D4EDD` | Buttons, highlights |
 | CardBackground | `#2D2D44` | Cards, cells |
 | TextPrimary | `#FFFFFF` | Primary text |
