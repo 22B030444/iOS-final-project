@@ -37,19 +37,25 @@ class MusicPlayerManager {
         self.currentTrack = track
         self.tracks = tracks
         self.currentIndex = index
+      
+        let url: URL?
+        if let localURL = DownloadsManager.shared.localFileURL(for: track),
+           DownloadsManager.shared.isFileDownloaded(track) {
+            url = localURL
+        } else if let urlString = track.previewUrl {
+            url = URL(string: urlString) 
+        } else {
+            url = nil
+        }
         
-        guard let urlString = track.previewUrl,
-              let url = URL(string: urlString) else { return }
+        guard let playURL = url else { return }
         
         player?.pause()
-        player = AVPlayer(url: url)
+        player = AVPlayer(url: playURL)
         player?.play()
         isPlaying = true
         
         PlayHistoryManager.shared.addTrack(track)
-        
-        onTrackChanged?(track)
-        onPlayStateChanged?(true)
         
         NotificationCenter.default.post(name: .miniPlayerTrackChanged, object: track)
         NotificationCenter.default.post(name: .miniPlayerStateChanged, object: isPlaying)

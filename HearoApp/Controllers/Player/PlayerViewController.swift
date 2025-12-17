@@ -41,7 +41,7 @@ class PlayerViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupNotifications()
-
+        
         if musicManager.currentTrack?.trackId == track?.trackId {
             updatePlayPauseButton()
         } else {
@@ -341,20 +341,22 @@ class PlayerViewController: UIViewController {
     
     @IBAction func downloadTapped(_ sender: UIButton) {
         guard let track = track else { return }
+            
+        if DownloadsManager.shared.isDownloaded(track) {
+            DownloadsManager.shared.removeTrack(track)
+            updateDownloadButton()
+            showDownloadAlert(message: "Removed from downloads")
+        } else {
+
+            sender.isEnabled = false
+            showDownloadAlert(message: "Downloading...")
         
-        let wasDownloaded = DownloadsManager.shared.toggleDownload(track)
-        
-        UIView.animate(withDuration: 0.1, animations: {
-            sender.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-        }) { _ in
-            UIView.animate(withDuration: 0.1) {
-                sender.transform = .identity
+            DownloadsManager.shared.downloadTrack(track) { [weak self] success in
+                sender.isEnabled = true
+                self?.updateDownloadButton()
+                self?.showDownloadAlert(message: success ? "Downloaded!" : "Download failed")
             }
         }
-        
-        updateDownloadButton()
-        let message = wasDownloaded ? "Downloaded" : "Removed from downloads"
-        showDownloadAlert(message: message)
     }
     
     @IBAction func menuTapped(_ sender: UIButton) {

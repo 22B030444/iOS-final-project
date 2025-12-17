@@ -95,7 +95,7 @@ extension MainTabBarController: MiniPlayerDelegate {
             playerVC.track = track
             playerVC.tracks = MusicPlayerManager.shared.tracks
             playerVC.currentIndex = MusicPlayerManager.shared.currentIndex
-            playerVC.modalPresentationStyle = .fullScreen
+            playerVC.modalPresentationStyle = .pageSheet
             present(playerVC, animated: true)
         }
     }
