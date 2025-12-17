@@ -29,10 +29,14 @@ A modern music streaming application for iOS built with Swift and UIKit. Hearo a
 - **Swift**: 5.0 or later
 - **macOS**: Ventura 13.0 or later (for development)
 
+
 ## Dependencies
 
-This project uses **no external dependencies** or package managers. All functionality is implemented using native iOS frameworks:
+- **Kingfisher** (v7.0+) - Image downloading and caching library
+  - Installed via Swift Package Manager
+  - GitHub: https://github.com/onevcat/Kingfisher
 
+### Native Frameworks
 - **UIKit**: User interface components
 - **AVFoundation**: Audio playback
 - **Foundation**: Core utilities and networking
@@ -234,18 +238,6 @@ Note: Free Apple Developer accounts have limitations on provisioning profiles (7
 - Downloads are simulated (tracks marked but not actually downloaded)
 - No user authentication (local storage only)
 - Search results limited to iTunes catalog
-
-## Dependencies
-
-- **Kingfisher** (v7.0+) - Image downloading and caching library
-  - Installed via Swift Package Manager
-  - GitHub: https://github.com/onevcat/Kingfisher
-
-### Native Frameworks
-- **UIKit**: User interface components
-- **AVFoundation**: Audio playback
-- **Foundation**: Core utilities and networking
-- **UserDefaults**: Local data persistence
 
 
 ## Acknowledgments
