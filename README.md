@@ -223,20 +223,18 @@ Note: Free Apple Developer accounts have limitations on provisioning profiles (7
 - No user authentication (local storage only)
 - Search results limited to iTunes catalog
 
-## Future Enhancements
+## Dependencies
 
-- [ ] Background audio playback
-- [ ] Lock screen controls
-- [ ] CarPlay support
-- [ ] Actual offline downloads
-- [ ] Social sharing features
-- [ ] Equalizer settings
-- [ ] Lyrics display
-- [ ] Queue management
+- **Kingfisher** (v7.0+) - Image downloading and caching library
+  - Installed via Swift Package Manager
+  - GitHub: https://github.com/onevcat/Kingfisher
 
-## License
+### Native Frameworks
+- **UIKit**: User interface components
+- **AVFoundation**: Audio playback
+- **Foundation**: Core utilities and networking
+- **UserDefaults**: Local data persistence
 
-This project is created for educational purposes.
 
 ## Acknowledgments
 
@@ -245,4 +243,3 @@ This project is created for educational purposes.
 
 ---
 
-**Developed with ❤️ using Swift and UIKit**
