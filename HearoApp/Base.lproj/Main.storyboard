@@ -567,6 +567,7 @@
                                             <constraint firstItem="dGz-mA-9HZ" firstAttribute="top" secondItem="isv-56-YW1" secondAttribute="bottom" constant="10" id="Q1U-dm-7FL"/>
                                             <constraint firstItem="wop-L6-UoQ" firstAttribute="top" secondItem="EXs-hI-EeU" secondAttribute="bottom" constant="13" id="QfW-h7-aJm"/>
                                             <constraint firstItem="Td0-8Z-6HO" firstAttribute="leading" secondItem="MWR-QZ-vuZ" secondAttribute="leading" id="RxV-SN-0k1"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hpU-Ne-JB5" secondAttribute="trailing" constant="20" symbolic="YES" id="XKx-Bg-105"/>
                                             <constraint firstAttribute="trailing" secondItem="dGz-mA-9HZ" secondAttribute="trailing" id="Xfb-Dp-WYw"/>
                                             <constraint firstAttribute="trailing" secondItem="Td0-8Z-6HO" secondAttribute="trailing" id="Zgr-0B-Nqz"/>
                                             <constraint firstItem="EXs-hI-EeU" firstAttribute="top" secondItem="EkM-9S-WOr" secondAttribute="bottom" constant="13" id="c9J-Nl-f61"/>
@@ -594,6 +595,7 @@
                         <viewLayoutGuide key="safeArea" id="ydW-9w-oYY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="3ha-Fe-8iZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7uw-kV-NDB" secondAttribute="trailing" constant="8" symbolic="YES" id="01t-K3-CQg"/>
                             <constraint firstItem="0g2-FR-ppx" firstAttribute="trailing" secondItem="ydW-9w-oYY" secondAttribute="trailing" id="0be-L0-G4i"/>
                             <constraint firstItem="9wh-s0-yyh" firstAttribute="top" secondItem="ydW-9w-oYY" secondAttribute="top" constant="5" id="1gP-AN-HP5"/>
                             <constraint firstItem="3ha-Fe-8iZ" firstAttribute="top" secondItem="ydW-9w-oYY" secondAttribute="top" constant="20" id="5TG-4r-Z6Z"/>
@@ -1765,10 +1767,10 @@
             </objects>
             <point key="canvasLocation" x="6715" y="1682"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="w6c-ca-SSS">
             <objects>
-                <tabBarController id="JhS-bX-jei" sceneMemberID="viewController">
+                <tabBarController id="JhS-bX-jei" customClass="MainTabBarController" customModule="HearoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="K7Z-vl-aMj"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nJ0-Wv-m5z">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -2181,7 +2183,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="R2f-xS-DYF"/>
         <segue reference="iQe-L5-2hC"/>
-        <segue reference="EoD-q3-flL"/>
+        <segue reference="QPN-Le-YNY"/>
         <segue reference="JbD-Q1-n2d"/>
     </inferredMetricsTieBreakers>
     <resources>

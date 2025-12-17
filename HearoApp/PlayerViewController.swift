@@ -25,12 +25,12 @@ class PlayerViewController: UIViewController {
     var track: Track?
     var tracks: [Track] = []
     var currentIndex: Int = 0
-    
-    private var player: AVPlayer?
-    private var isPlaying = false
+    private weak var observedPlayer: AVPlayer?
     private var isShuffleOn = false
     private var repeatMode: RepeatMode = .off
     private var timeObserver: Any?
+    
+    private var musicManager = MusicPlayerManager.shared
     
     enum RepeatMode {
         case off, one, all
@@ -39,19 +39,46 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        configurePlayer()
-    }
-    private func removeTimeObserverIfNeeded() {
-        if let observer = timeObserver {
-            player?.removeTimeObserver(observer)
-            timeObserver = nil
+        setupNotifications()
+
+        if musicManager.currentTrack?.trackId == track?.trackId {
+            updatePlayPauseButton()
+        } else {
+            startPlayback()
         }
+                
+        setupTimeObserver()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        player?.pause()
-        removeTimeObserverIfNeeded()
-
+        removeTimeObserver()
+    }
+        
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(trackDidChange(_:)),
+            name: .miniPlayerTrackChanged,
+            object: nil
+        )
+            
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playStateDidChange(_:)),
+            name: .miniPlayerStateChanged,
+            object: nil
+        )
+    }
+    @objc private func trackDidChange(_ notification: Notification) {
+        guard let newTrack = notification.object as? Track else { return }
+        track = newTrack
+        currentIndex = musicManager.currentIndex
+        setupUI()
+        setupTimeObserver()
+    }
+        
+    @objc private func playStateDidChange(_ notification: Notification) {
+        updatePlayPauseButton()
     }
     
     private func setupUI() {
@@ -79,6 +106,7 @@ class PlayerViewController: UIViewController {
         updateRepeatButton()
         updateLikeButton()
         updateDownloadButton()
+        updatePlayPauseButton()
     }
     
     private func loadImage(from url: URL) {
@@ -90,58 +118,60 @@ class PlayerViewController: UIViewController {
             }
         }.resume()
     }
+    private func startPlayback() {
+        guard let track = track else { return }
+        musicManager.play(track: track, tracks: tracks, index: currentIndex)
+    }
     
-    private func configurePlayer() {
-        guard let track = track,
-              let urlString = track.previewUrl,
-              let url = URL(string: urlString) else { return }
-        
-        player?.pause()
-        removeTimeObserverIfNeeded()
-        if let observer = timeObserver {
-            player?.removeTimeObserver(observer)
-        }
-        
-        player = AVPlayer(url: url)
-        PlayHistoryManager.shared.addTrack(track)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(trackDidFinish),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem
-        )
-        
+    private func setupTimeObserver() {
+        removeTimeObserver()
+            
+        guard let player = musicManager.player else { return }
+        observedPlayer = player
         let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        timeObserver = player?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+        timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
             let currentSeconds = Int(CMTimeGetSeconds(time))
             self?.currentTimeLabel.text = self?.formatTime(currentSeconds)
             
-            if let duration = self?.player?.currentItem?.duration {
+            if let duration = player.currentItem?.duration {
                 let totalSeconds = CMTimeGetSeconds(duration)
                 if totalSeconds > 0 && !totalSeconds.isNaN {
                     self?.progressSlider.value = Float(CMTimeGetSeconds(time) / totalSeconds)
                 }
             }
         }
-        
-        player?.play()
-        isPlaying = true
-        playPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+            
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(trackDidFinish),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: player.currentItem
+        )
+    }
+    
+    private func removeTimeObserver() {
+        if let observer = timeObserver, let player = observedPlayer {
+            player.removeTimeObserver(observer)
+            timeObserver = nil
+            observedPlayer = nil
+        }
     }
     
     @objc private func trackDidFinish() {
         switch repeatMode {
         case .one:
-            player?.seek(to: .zero)
-            player?.play()
+            musicManager.player?.seek(to: .zero)
+            musicManager.player?.play()
         case .all:
             playNextTrack()
         case .off:
             if currentIndex < tracks.count - 1 {
                 playNextTrack()
             } else {
-                isPlaying = false
-                playPauseButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+                musicManager.isPlaying = false
+                updatePlayPauseButton()
+                NotificationCenter.default.post(name: .miniPlayerStateChanged, object: false)
             }
         }
     }
@@ -152,10 +182,15 @@ class PlayerViewController: UIViewController {
         return String(format: "%d:%02d", mins, secs)
     }
     
+    private func updatePlayPauseButton() {
+        let imageName = musicManager.isPlaying ? "pause.circle.fill":"play.circle.fill"
+        playPauseButton.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+    
     private func updateShuffleButton() {
         shuffleButton.tintColor = isShuffleOn ? UIColor(named: "AccentPurple") : .white
     }
-    
+
     private func updateRepeatButton() {
         switch repeatMode {
         case .off:
@@ -169,6 +204,7 @@ class PlayerViewController: UIViewController {
             repeatButton.tintColor = UIColor(named: "AccentPurple")
         }
     }
+    
     private func updateLikeButton() {
         guard let track = track else { return }
         let isLiked = LikedSongsManager.shared.isLiked(track)
@@ -176,22 +212,22 @@ class PlayerViewController: UIViewController {
         likeButton.setImage(UIImage(systemName: imageName), for: .normal)
         likeButton.tintColor = isLiked ? UIColor(named: "AccentPurple") : .white
     }
+    
     private func updateDownloadButton() {
         guard let track = track else { return }
         let isDownloaded = DownloadsManager.shared.isDownloaded(track)
         let imageName = isDownloaded ? "arrow.down.circle.fill" : "arrow.down.circle"
         downloadButton.setImage(UIImage(systemName: imageName), for: .normal)
         downloadButton.tintColor = isDownloaded ? UIColor(named: "AccentPurple") : .white
-        
     }
 
-    
     private func playTrack(at index: Int) {
         guard index >= 0 && index < tracks.count else { return }
         currentIndex = index
         track = tracks[index]
+        musicManager.play(track: tracks[index], tracks: tracks, index: index)
         setupUI()
-        configurePlayer()
+        setupTimeObserver()
     }
    
     private func playNextTrack() {
@@ -265,11 +301,13 @@ class PlayerViewController: UIViewController {
         
         present(alert, animated: true)
     }
+    
     private func showAddedAlert(playlistName: String) {
         let alert = UIAlertController(title: "Added!", message: "Track added to \(playlistName)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    
     private func showDownloadAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         present(alert, animated: true)
@@ -298,6 +336,7 @@ class PlayerViewController: UIViewController {
         
         updateLikeButton()
     }
+    
     @IBAction func downloadTapped(_ sender: UIButton) {
         guard let track = track else { return }
         
@@ -338,21 +377,15 @@ class PlayerViewController: UIViewController {
         present(alert, animated: true)
     }
     @IBAction func playPauseTapped(_ sender: UIButton) {
-        if isPlaying {
-            player?.pause()
-            playPauseButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
-        } else {
-            player?.play()
-            playPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
-        }
-        isPlaying.toggle()
+        musicManager.togglePlayPause()
+        updatePlayPauseButton()
     }
     
     @IBAction func sliderChanged(_ sender: UISlider) {
-        guard let duration = player?.currentItem?.duration else { return }
+        guard let duration = musicManager.player?.currentItem?.duration else { return }
         let totalSeconds = CMTimeGetSeconds(duration)
         let seekTime = CMTime(seconds: Double(sender.value) * totalSeconds, preferredTimescale: 1)
-        player?.seek(to: seekTime)
+        musicManager.player?.seek(to: seekTime)
     }
     @IBAction func previousTapped(_ sender: UIButton) {
         playPreviousTrack()
