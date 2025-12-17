@@ -74,57 +74,69 @@ Or manually:
 3. Wait for the build to complete
 
 ## Project Structure
-
 ```
 HearoApp/
-├── Models/
-│   ├── Track.swift              # Track data model
-│   ├── Album.swift              # Album data model
-│   └── Playlist.swift           # Playlist data model
+├── Application/
+│   ├── AppDelegate.swift
+│   └── SceneDelegate.swift
 │
-├── Services/
-│   ├── NetworkManager.swift     # API calls to iTunes Search API
-│   ├── MusicPlayerManager.swift # Global audio playback singleton
-│   ├── LikedSongsManager.swift  # Liked songs persistence
-│   ├── PlaylistManager.swift    # Playlist CRUD operations
-│   ├── SavedAlbumsManager.swift # Album library management
-│   ├── PlayHistoryManager.swift # Recently played tracking
-│   └── DownloadsManager.swift   # Download state management
-│
-├── Views/
-│   ├── TrackTableViewCell.swift # Table view cell for tracks
-│   ├── TrackTableViewCell.xib   # Cell XIB layout
-│   ├── TrackCollectionViewCell.swift # Collection view cell
-│   └── MiniPlayerView.swift     # Mini player component
+├── Cells/
+│   ├── PlaylistCell.swift
+│   ├── TrackTableViewCell.swift
+│   └── TrackTableViewCell.xib
 │
 ├── Controllers/
-│   ├── MainTabBarController.swift    # Tab bar with mini player
-│   ├── HomeViewController.swift      # Home/discovery screen
-│   ├── SearchViewController.swift    # Search functionality
-│   ├── LibraryViewController.swift   # Library menu
-│   ├── PlayerViewController.swift    # Full-screen player
-│   ├── LikedSongsViewController.swift
-│   ├── PlaylistsViewController.swift
-│   ├── PlaylistViewController.swift
-│   ├── AlbumsViewController.swift
+│   ├── Home/
+│   │   ├── Views/
+│   │   │   ├── TrackCollectionViewCell.swift
+│   │   │   └── TrackCollectionViewCell.xib
+│   │   └── HomeViewController.swift
+│   │
+│   ├── Library/
+│   │
+│   ├── Player/
+│   │   ├── MainTabBarController.swift
+│   │   ├── MiniPlayerView.swift
+│   │   ├── MiniPlayerView.xib
+│   │   └── PlayerViewController.swift
+│   │
+│   ├── Profile/
+│   │   └── ProfileViewController.swift
+│   │
+│   ├── Search/
+│   │
 │   ├── AlbumViewController.swift
 │   ├── ArtistViewController.swift
-│   ├── ProfileViewController.swift
-│   └── LoginViewController.swift
+│   └── PlaylistDetailViewController.swift
 │
-├── Resources/
-│   ├── Assets.xcassets/         # Images and colors
-│   ├── Main.storyboard          # UI layouts
-│   └── LaunchScreen.storyboard
+├── Models/
+│   ├── Album.swift
+│   ├── DownloadedTrack.swift
+│   ├── PlayHistory.swift
+│   ├── Playlist.swift
+│   └── Track.swift
 │
-├── Supporting Files/
-│   ├── AppDelegate.swift
-│   ├── SceneDelegate.swift
-│   └── Info.plist
+├── Services/
+│   ├── DownloadsManager.swift
+│   ├── FollowedArtistsManager.swift
+│   ├── LikedSongsManager.swift
+│   ├── MusicPlayerManager.swift
+│   ├── NetworkManager.swift
+│   ├── PlayHistoryManager.swift
+│   ├── PlaylistManager.swift
+│   └── SavedAlbumsManager.swift
 │
-└── XIBs/
-    ├── TrackTableViewCell.xib
-    └── MiniPlayerView.xib
+├── Assets.xcassets
+├── Info.plist
+├── LaunchScreen.storyboard
+├── Main.storyboard
+└── ViewController.swift
+│
+├── HearoAppTests/
+└── HearoAppUITests/
+
+Package Dependencies/
+└── Kingfisher 8.6.2
 ```
 
 ## API Reference
