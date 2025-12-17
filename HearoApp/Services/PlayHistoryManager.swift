@@ -26,14 +26,11 @@ class PlayHistoryManager {
     func addTrack(_ track: Track) {
         var history = getPlayHistory()
         
-        // Удаляем предыдущие записи этого трека
         history.removeAll { $0.track.trackId == track.trackId }
-        
-        // Добавляем новую запись в начало
+ 
         let playHistory = PlayHistory(track: track)
         history.insert(playHistory, at: 0)
-        
-        // Ограничиваем размер истории
+   
         if history.count > maxHistorySize {
             history = Array(history.prefix(maxHistorySize))
         }

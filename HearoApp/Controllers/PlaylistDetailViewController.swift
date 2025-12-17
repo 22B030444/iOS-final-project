@@ -53,16 +53,22 @@ class PlaylistDetailViewController: UIViewController {
     }
     
     private func loadCoverImage() {
+        let placeholder = UIImage(systemName: "music.note.list")
+        
         if let firstTrack = tracks.first,
            let urlString = firstTrack.artworkUrl600,
            let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.coverImageView.image = image
-                    }
-                }
-            }.resume()
+            coverImageView.kf.setImage(
+                with: url,
+                placeholder: placeholder,
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
+        } else {
+            coverImageView.image = placeholder
+            coverImageView.tintColor = UIColor(named: "AccentPurple")
         }
     }
     // MARK: - Actions

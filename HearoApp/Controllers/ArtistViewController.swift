@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ArtistViewController: UIViewController {
     
@@ -46,17 +47,20 @@ class ArtistViewController: UIViewController {
     }
     
     private func loadArtistImage() {
+        let placeholder = UIImage(systemName: "person.circle.fill")
+        
         if let urlString = artistImageUrl,
            let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.artistImageView.image = image
-                    }
-                }
-            }.resume()
+            artistImageView.kf.setImage(
+                with: url,
+                placeholder: placeholder,
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
         } else {
-            artistImageView.image = UIImage(systemName: "person.circle.fill")
+            artistImageView.image = placeholder
             artistImageView.tintColor = UIColor(named: "AccentPurple")
         }
     }

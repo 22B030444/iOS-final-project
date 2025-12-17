@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		63632C992EF2F9E5006A5C55 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 63632C982EF2F9E5006A5C55 /* Kingfisher */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6381454B2EE7E5DB00BC799B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -35,31 +39,35 @@
 			membershipExceptions = (
 				"/Localized: LaunchScreen.storyboard",
 				"/Localized: Main.storyboard",
-				AlbumsViewController.swift,
-				AlbumViewController.swift,
-				AppDelegate.swift,
-				ArtistsViewController.swift,
-				ArtistViewController.swift,
+				Application/AppDelegate.swift,
+				Application/SceneDelegate.swift,
 				Assets.xcassets,
-				DownloadsViewController.swift,
-				HomeViewController.swift,
-				LibraryViewController.swift,
-				LikedSongsViewController.swift,
-				MainTabBarController.swift,
-				MiniPlayerView.swift,
-				MiniPlayerView.xib,
+				Cells/PlaylistCell.swift,
+				Cells/TrackTableViewCell.swift,
+				Cells/TrackTableViewCell.xib,
+				Controllers/AlbumViewController.swift,
+				Controllers/ArtistViewController.swift,
+				Controllers/Home/HomeViewController.swift,
+				Controllers/Home/Views/TrackCollectionViewCell.swift,
+				Controllers/Home/Views/TrackCollectionViewCell.xib,
+				Controllers/Library/AlbumsViewController.swift,
+				Controllers/Library/ArtistsViewController.swift,
+				Controllers/Library/DownloadsViewController.swift,
+				Controllers/Library/LibraryViewController.swift,
+				Controllers/Library/LikedSongsViewController.swift,
+				Controllers/Library/PlaylistsViewController.swift,
+				Controllers/Player/MainTabBarController.swift,
+				Controllers/Player/MiniPlayerView.swift,
+				Controllers/Player/MiniPlayerView.xib,
+				Controllers/Player/PlayerViewController.swift,
+				Controllers/PlaylistDetailViewController.swift,
+				Controllers/Profile/ProfileViewController.swift,
+				Controllers/Search/SearchViewController.swift,
 				Models/Album.swift,
 				Models/DownloadedTrack.swift,
 				Models/PlayHistory.swift,
 				Models/Playlist.swift,
 				Models/Track.swift,
-				PlayerViewController.swift,
-				PlaylistCell.swift,
-				PlaylistDetailViewController.swift,
-				PlaylistsViewController.swift,
-				ProfileViewController.swift,
-				SceneDelegate.swift,
-				SearchViewController.swift,
 				Services/DownloadsManager.swift,
 				Services/FollowedArtistsManager.swift,
 				Services/LikedSongsManager.swift,
@@ -68,10 +76,6 @@
 				Services/PlayHistoryManager.swift,
 				Services/PlaylistManager.swift,
 				Services/SavedAlbumsManager.swift,
-				TrackCollectionViewCell.swift,
-				TrackCollectionViewCell.xib,
-				TrackTableViewCell.swift,
-				TrackTableViewCell.xib,
 				ViewController.swift,
 			);
 			target = 638145332EE7E5DA00BC799B /* HearoApp */;
@@ -81,32 +85,36 @@
 			membershipExceptions = (
 				"/Localized: LaunchScreen.storyboard",
 				"/Localized: Main.storyboard",
-				AlbumsViewController.swift,
-				AlbumViewController.swift,
-				AppDelegate.swift,
-				ArtistsViewController.swift,
-				ArtistViewController.swift,
+				Application/AppDelegate.swift,
+				Application/SceneDelegate.swift,
 				Assets.xcassets,
-				DownloadsViewController.swift,
-				HomeViewController.swift,
+				Cells/PlaylistCell.swift,
+				Cells/TrackTableViewCell.swift,
+				Cells/TrackTableViewCell.xib,
+				Controllers/AlbumViewController.swift,
+				Controllers/ArtistViewController.swift,
+				Controllers/Home/HomeViewController.swift,
+				Controllers/Home/Views/TrackCollectionViewCell.swift,
+				Controllers/Home/Views/TrackCollectionViewCell.xib,
+				Controllers/Library/AlbumsViewController.swift,
+				Controllers/Library/ArtistsViewController.swift,
+				Controllers/Library/DownloadsViewController.swift,
+				Controllers/Library/LibraryViewController.swift,
+				Controllers/Library/LikedSongsViewController.swift,
+				Controllers/Library/PlaylistsViewController.swift,
+				Controllers/Player/MainTabBarController.swift,
+				Controllers/Player/MiniPlayerView.swift,
+				Controllers/Player/MiniPlayerView.xib,
+				Controllers/Player/PlayerViewController.swift,
+				Controllers/PlaylistDetailViewController.swift,
+				Controllers/Profile/ProfileViewController.swift,
+				Controllers/Search/SearchViewController.swift,
 				Info.plist,
-				LibraryViewController.swift,
-				LikedSongsViewController.swift,
-				MainTabBarController.swift,
-				MiniPlayerView.swift,
-				MiniPlayerView.xib,
 				Models/Album.swift,
 				Models/DownloadedTrack.swift,
 				Models/PlayHistory.swift,
 				Models/Playlist.swift,
 				Models/Track.swift,
-				PlayerViewController.swift,
-				PlaylistCell.swift,
-				PlaylistDetailViewController.swift,
-				PlaylistsViewController.swift,
-				ProfileViewController.swift,
-				SceneDelegate.swift,
-				SearchViewController.swift,
 				Services/DownloadsManager.swift,
 				Services/FollowedArtistsManager.swift,
 				Services/LikedSongsManager.swift,
@@ -115,10 +123,6 @@
 				Services/PlayHistoryManager.swift,
 				Services/PlaylistManager.swift,
 				Services/SavedAlbumsManager.swift,
-				TrackCollectionViewCell.swift,
-				TrackCollectionViewCell.xib,
-				TrackTableViewCell.swift,
-				TrackTableViewCell.xib,
 				ViewController.swift,
 			);
 			target = 638145532EE7E5DB00BC799B /* HearoAppUITests */;
@@ -152,6 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63632C992EF2F9E5006A5C55 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +214,7 @@
 			);
 			name = HearoApp;
 			packageProductDependencies = (
+				63632C982EF2F9E5006A5C55 /* Kingfisher */,
 			);
 			productName = HearoApp;
 			productReference = 638145342EE7E5DA00BC799B /* HearoApp.app */;
@@ -294,6 +300,9 @@
 			);
 			mainGroup = 6381452B2EE7E5DA00BC799B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				63632C972EF2F70A006A5C55 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 638145352EE7E5DA00BC799B /* Products */;
 			projectDirPath = "";
@@ -654,6 +663,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		63632C972EF2F70A006A5C55 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		63632C982EF2F9E5006A5C55 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63632C972EF2F70A006A5C55 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6381452C2EE7E5DA00BC799B /* Project object */;
 }

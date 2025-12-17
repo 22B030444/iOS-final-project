@@ -15,39 +15,39 @@
             <objects>
                 <viewController id="Os0-5g-LJ5" customClass="ArtistViewController" customModule="HearoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1Zd-PL-wWG">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gradient" translatesAutoresizingMaskIntoConstraints="NO" id="Phy-rQ-wZy">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XDR-0l-x0r">
-                                <rect key="frame" x="0.0" y="103" width="393" height="250"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="ho7-Sh-aWw"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7T-OH-fJI">
-                                <rect key="frame" x="16" y="268" width="72" height="34"/>
+                                <rect key="frame" x="16" y="224" width="72" height="34"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artists" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbT-Kw-bqw">
-                                <rect key="frame" x="16" y="310" width="42" height="17"/>
+                                <rect key="frame" x="16" y="266" width="42" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6MG-Re-Uyq">
-                                <rect key="frame" x="16" y="369" width="36" height="17"/>
+                                <rect key="frame" x="16" y="325" width="36" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" name="TextSecondary"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dLH-35-nah">
-                                <rect key="frame" x="16" y="398" width="100" height="25"/>
+                                <rect key="frame" x="16" y="354" width="100" height="25"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="Ign-cp-PQl"/>
@@ -69,7 +69,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5g-GL-EV4">
-                                <rect key="frame" x="327.33333333333331" y="393.33333333333331" width="49.666666666666686" height="34.333333333333314"/>
+                                <rect key="frame" x="327.33333333333331" y="349.33333333333331" width="49.666666666666686" height="34.333333333333314"/>
                                 <color key="tintColor" name="AccentPurple"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="play.circle.fill" catalog="system"/>
@@ -78,13 +78,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Songs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Peo-kX-c2u">
-                                <rect key="frame" x="16" y="443" width="60" height="24"/>
+                                <rect key="frame" x="16" y="399" width="60" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Dw5-cC-rCr">
-                                <rect key="frame" x="0.0" y="479" width="393" height="290"/>
+                                <rect key="frame" x="0.0" y="435" width="393" height="348"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
@@ -128,7 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ifK-xP-zCS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5282" y="2704"/>
+            <point key="canvasLocation" x="7618" y="2656"/>
         </scene>
         <!--Player View Controller-->
         <scene sceneID="Bk0-xR-azf">
@@ -349,7 +349,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="581" y="3263"/>
+            <point key="canvasLocation" x="2712" y="4761"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="3Tj-9b-Uzb">
@@ -657,6 +657,10 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </searchBar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="RSr-ci-zm4">
+                                <rect key="frame" x="186.66666666666666" y="416" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="z5k-34-XkE">
                                 <rect key="frame" x="0.0" y="159" width="393" height="610"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -670,9 +674,11 @@
                             <constraint firstItem="z5k-34-XkE" firstAttribute="top" secondItem="LP9-Bh-NRk" secondAttribute="bottom" id="7eA-Wv-AaC"/>
                             <constraint firstItem="LP9-Bh-NRk" firstAttribute="leading" secondItem="6G8-GC-AIj" secondAttribute="leading" id="EqJ-5V-otP"/>
                             <constraint firstItem="6G8-GC-AIj" firstAttribute="bottom" secondItem="z5k-34-XkE" secondAttribute="bottom" id="I5h-ki-gTA"/>
+                            <constraint firstItem="RSr-ci-zm4" firstAttribute="centerX" secondItem="xxw-8V-tYa" secondAttribute="centerX" id="IJX-It-SAy"/>
                             <constraint firstItem="LP9-Bh-NRk" firstAttribute="top" secondItem="6G8-GC-AIj" secondAttribute="top" id="Kqy-eZ-ixv"/>
                             <constraint firstAttribute="trailing" secondItem="VfW-ho-JZb" secondAttribute="trailing" id="PFP-zZ-qPV"/>
                             <constraint firstItem="6G8-GC-AIj" firstAttribute="trailing" secondItem="z5k-34-XkE" secondAttribute="trailing" id="Qu7-fk-AKo"/>
+                            <constraint firstItem="RSr-ci-zm4" firstAttribute="centerY" secondItem="xxw-8V-tYa" secondAttribute="centerY" id="Um1-Aa-L37"/>
                             <constraint firstItem="z5k-34-XkE" firstAttribute="leading" secondItem="6G8-GC-AIj" secondAttribute="leading" id="bZJ-2k-Ilv"/>
                             <constraint firstAttribute="bottom" secondItem="VfW-ho-JZb" secondAttribute="bottom" id="cch-Qj-S7q"/>
                             <constraint firstItem="VfW-ho-JZb" firstAttribute="top" secondItem="xxw-8V-tYa" secondAttribute="top" id="fw3-B4-HNF"/>
@@ -682,6 +688,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="n1t-yc-HER"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="RSr-ci-zm4" id="qdw-oL-qIy"/>
                         <outlet property="searchBar" destination="LP9-Bh-NRk" id="hho-g2-2Ed"/>
                         <outlet property="tableView" destination="z5k-34-XkE" id="eUC-Ak-y1W"/>
                         <segue destination="Aep-Nl-2CG" kind="presentation" identifier="showPlayerFromSearch" id="0Hq-AX-PBF"/>
@@ -1086,7 +1093,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lxs-Qa-1n2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5513.740458015267" y="647.18309859154931"/>
+            <point key="canvasLocation" x="3851" y="1629"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="5lz-oj-Nur">
@@ -1316,7 +1323,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gqm-Jm-Zbg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1732" y="1682"/>
+            <point key="canvasLocation" x="2611" y="1682"/>
         </scene>
         <!--Artists View Controller-->
         <scene sceneID="HsG-KO-Eey">
@@ -1405,7 +1412,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mH1-hI-xxa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5282" y="1682"/>
+            <point key="canvasLocation" x="7619" y="1629"/>
         </scene>
         <!--Downloads View Controller-->
         <scene sceneID="dEd-jp-Dcw">
@@ -1468,7 +1475,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yrb-yZ-mFq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8203.8167938931292" y="1681.6901408450706"/>
+            <point key="canvasLocation" x="6286" y="1629"/>
         </scene>
         <!--Liked Songs View Controller-->
         <scene sceneID="C3X-fK-BQg">
@@ -1533,7 +1540,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Re-oV-lwd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3799" y="1682"/>
+            <point key="canvasLocation" x="5010" y="1629"/>
         </scene>
         <!--Playlist Detail View Controller-->
         <scene sceneID="Hrx-p2-e5t">
@@ -1655,7 +1662,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X0n-Tk-3eQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6714" y="2787"/>
+            <point key="canvasLocation" x="9276" y="2656"/>
         </scene>
         <!--Playlists View Controller-->
         <scene sceneID="EqA-fn-tq8">
@@ -1765,7 +1772,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZQ8-0h-KWP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6715" y="1682"/>
+            <point key="canvasLocation" x="9276" y="1629"/>
         </scene>
         <!--Main Tab Bar Controller-->
         <scene sceneID="w6c-ca-SSS">
@@ -2177,14 +2184,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0M-2p-mI8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3569" y="2621"/>
+            <point key="canvasLocation" x="2610" y="2817"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="R2f-xS-DYF"/>
+        <segue reference="n43-dp-2RU"/>
         <segue reference="iQe-L5-2hC"/>
-        <segue reference="QPN-Le-YNY"/>
-        <segue reference="JbD-Q1-n2d"/>
+        <segue reference="LL0-9b-mMx"/>
+        <segue reference="PbB-L0-XQb"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple" width="59" height="44"/>
@@ -2221,7 +2228,7 @@
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AccentPurple">
-            <color red="0.56862745098039214" green="0.20784313725490197" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.61568627450980395" green="0.30588235294117649" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="BackgroundDark">
             <color red="0.094117647058823528" green="0.054901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -2230,7 +2237,7 @@
             <color red="0.17647058823529413" green="0.10196078431372549" blue="0.28627450980392155" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="CardBackground">
-            <color red="0.22745098039215686" green="0.22745098039215686" blue="0.22745098039215686" alpha="0.51999998092651367" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.17647058823529413" green="0.17647058823529413" blue="0.26666666666666666" alpha="0.51999998092651367" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="TextSecondary">
             <color white="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

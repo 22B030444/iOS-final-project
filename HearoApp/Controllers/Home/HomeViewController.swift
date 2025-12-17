@@ -92,7 +92,7 @@ class HomeViewController: UIViewController {
             }
         }
 
-        NetworkManager.shared.searchAlbums(query: "pop 2024") { [weak self] result in
+        NetworkManager.shared.searchAlbums(query: "top albums 2024") { [weak self] result in
             switch result {
             case .success(let albums):
                 self?.albums = albums
@@ -145,17 +145,18 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.trackNameLabel.text = album.collectionName ?? "Unknown Album"
             cell.artistNameLabel.text = album.artistName ?? "Unknown Artist"
             
-            if let urlString = album.artworkUrl600,
-               let url = URL(string: urlString) {
-                URLSession.shared.dataTask(with: url) { data, _, _ in
-                    if let data = data, let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            cell.artworkImageView.image = image
-                        }
-                    }
-                }.resume()
+            let placeholder = UIImage(systemName: "music.note")
+            if let urlString = album.artworkUrl100,
+                let url = URL(string: urlString) {
+                    cell.artworkImageView.kf.setImage(
+                    with: url,
+                    placeholder: placeholder,
+                    options: [.transition(.fade(0.2))]
+                )
+            } else {
+                cell.artworkImageView.image = placeholder
             }
-            
+                    
             return cell
         }
         

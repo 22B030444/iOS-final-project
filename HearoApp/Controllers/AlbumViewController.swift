@@ -7,7 +7,7 @@
 
 
 import UIKit
-
+import Kingfisher
 class AlbumViewController: UIViewController {
     
     @IBOutlet weak var albumImageView: UIImageView!
@@ -54,17 +54,20 @@ class AlbumViewController: UIViewController {
     }
     
     private func loadAlbumImage() {
+        let placeholder = UIImage(systemName: "music.note")
+        
         if let urlString = album?.artworkUrl600,
            let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.albumImageView.image = image
-                    }
-                }
-            }.resume()
+            albumImageView.kf.setImage(
+                with: url,
+                placeholder: placeholder,
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
         } else {
-            albumImageView.image = UIImage(systemName: "music.note")
+            albumImageView.image = placeholder
             albumImageView.tintColor = UIColor(named: "AccentPurple")
         }
     }

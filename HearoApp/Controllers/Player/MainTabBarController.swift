@@ -61,7 +61,6 @@ class MainTabBarController: UITabBarController {
     }
     
     private func updateTabBarInsets() {
-        // Обновляем отступы для всех дочерних контроллеров
         for child in children {
             if let nav = child as? UINavigationController {
                 nav.additionalSafeAreaInsets.bottom = miniPlayerHeight + 8

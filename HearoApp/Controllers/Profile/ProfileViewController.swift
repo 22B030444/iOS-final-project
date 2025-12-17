@@ -42,7 +42,7 @@ class ProfileViewController: UIViewController {
         playlistsCountLabel.text = "\(playlistsCount)"
         let artistsCount = FollowedArtistsManager.shared.getFollowedArtists().count
         artistsCountLabel.text = "\(artistsCount)"
-        let historyCount = PlayHistoryManager.shared.getPlayHistory().count
+        
         
     }
 }

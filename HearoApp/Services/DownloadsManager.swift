@@ -16,7 +16,7 @@ class DownloadsManager {
     
     func getDownloadedTracks() -> [DownloadedTrack] {
         guard let data = UserDefaults.standard.data(forKey: key),
-              let tracks = try? JSONDecoder().decode([DownloadedTrack].self, from: data) else {
+            let tracks = try? JSONDecoder().decode([DownloadedTrack].self, from: data) else {
             return []
         }
         return tracks.sorted { $0.downloadedAt > $1.downloadedAt }

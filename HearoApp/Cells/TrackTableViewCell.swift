@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class TrackTableViewCell: UITableViewCell {
     
@@ -15,30 +16,35 @@ class TrackTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = .clear
-        selectionStyle = .none
         
         artworkImageView.layer.cornerRadius = 8
         artworkImageView.clipsToBounds = true
         artworkImageView.contentMode = .scaleAspectFill
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        artworkImageView.kf.cancelDownloadTask()
+        artworkImageView.image = nil
+    }
     
     func configure(with track: Track) {
         trackNameLabel.text = track.trackName ?? "Unknown"
         artistNameLabel.text = track.artistName ?? "Unknown Artist"
-        
-        artworkImageView.image = UIImage(systemName: "music.note")
-        artworkImageView.tintColor = .gray
+        let placeholder = UIImage(systemName: "music.note")
         
         if let urlString = track.artworkUrl100,
-           let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.artworkImageView.image = image
-                    }
-                }
-            }.resume()
+            let url = URL(string: urlString) {
+            artworkImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage(systemName: "music.note"),
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
+        } else {
+            artworkImageView.image = placeholder
+            artworkImageView.tintColor = .gray
         }
     }
 

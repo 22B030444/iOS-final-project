@@ -5,13 +5,9 @@
 //  Created by Zhasmin Suleimenova on 10.12.2025.
 //
 
-//
-//  SearchViewController.swift
-//  HearoApp
-//
 
 import UIKit
-
+import Kingfisher
 enum SearchResultType {
     case track(Track)
     case album(Album)
@@ -21,7 +17,7 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private var searchResults: [SearchResultType] = []
     private var searchTimer: Timer?
     
@@ -40,50 +36,65 @@ class SearchViewController: UIViewController {
     }
     
     private func search(query: String) {
+        activityIndicator.startAnimating()
         searchResults.removeAll()
         
         let group = DispatchGroup()
+        var trackResults: [Track] = []
+        var albumResults: [Album] = []
+        var networkError: NetworkError?
         
-        var tracks: [Track] = []
-        var albums: [Album] = []
-        
-        // Поиск треков
         group.enter()
         NetworkManager.shared.searchTracks(query: query) { result in
             switch result {
-            case .success(let results):
-                tracks = results
+            case .success(let tracks):
+                trackResults = tracks
             case .failure(let error):
-                print("Track search error: \(error)")
+                networkError = error
             }
             group.leave()
         }
         
-        // Поиск альбомов
         group.enter()
         NetworkManager.shared.searchAlbums(query: query) { result in
             switch result {
-            case .success(let results):
-                albums = results
+            case .success(let albums):
+                albumResults = albums
             case .failure(let error):
-                print("Album search error: \(error)")
+                networkError = error
             }
             group.leave()
         }
         
         group.notify(queue: .main) { [weak self] in
-            // Сначала альбомы, потом треки
-            for album in albums.prefix(5) {
+            self?.activityIndicator.stopAnimating()
+            
+            if let error = networkError, trackResults.isEmpty && albumResults.isEmpty {
+                self?.showErrorAlert(message: error.message)
+                return
+            }
+        
+            for album in albumResults.prefix(5) {
                 self?.searchResults.append(.album(album))
             }
-            for track in tracks {
+            for track in trackResults {
                 self?.searchResults.append(.track(track))
             }
+            
             self?.tableView.reloadData()
         }
     }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(
+            title: "Network Error",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
-
 // MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     
@@ -130,13 +141,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             if let urlString = track.artworkUrl100,
                let url = URL(string: urlString) {
-                URLSession.shared.dataTask(with: url) { data, _, _ in
-                    if let data = data, let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            cell.artworkImageView.image = image
-                        }
-                    }
-                }.resume()
+                cell.artworkImageView.kf.setImage(
+                    with: url,
+                    placeholder: UIImage(systemName: "music.note"),
+                    options: [.transition(.fade(0.2))]
+                )
             }
             
         case .album(let album):
@@ -148,13 +157,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             if let urlString = album.artworkUrl100,
                let url = URL(string: urlString) {
-                URLSession.shared.dataTask(with: url) { data, _, _ in
-                    if let data = data, let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            cell.artworkImageView.image = image
-                        }
-                    }
-                }.resume()
+                cell.artworkImageView.kf.setImage(
+                    with: url,
+                    placeholder: UIImage(systemName: "music.note"),
+                    options: [.transition(.fade(0.2))]
+                )
             }
         }
         
@@ -170,15 +177,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch result {
         case .track:
-            // Собираем только треки для плеера
             let tracks = searchResults.compactMap { result -> Track? in
                 if case .track(let track) = result {
                     return track
                 }
                 return nil
             }
-            
-            // Находим индекс трека среди треков
             var trackIndex = 0
             var currentTrackCount = 0
             for (i, r) in searchResults.enumerated() {

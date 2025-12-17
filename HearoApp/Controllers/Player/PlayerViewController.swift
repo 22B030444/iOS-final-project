@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import Kingfisher
 
 class PlayerViewController: UIViewController {
     
@@ -110,13 +111,14 @@ class PlayerViewController: UIViewController {
     }
     
     private func loadImage(from url: URL) {
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-            if let data = data, let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self?.artworkImageView.image = image
-                }
-            }
-        }.resume()
+        artworkImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(systemName: "music.note"),
+            options: [
+                .transition(.fade(0.3)),
+                .cacheOriginalImage
+            ]
+        )
     }
     private func startPlayback() {
         guard let track = track else { return }

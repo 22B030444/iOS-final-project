@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol MiniPlayerDelegate: AnyObject {
     func miniPlayerTapped()
@@ -70,18 +71,18 @@ class MiniPlayerView: UIView {
         let imageName = isPlaying ? "pause.fill" : "play.fill"
         playPauseButton.setImage(UIImage(systemName: imageName), for: .normal)
         
-        artworkImageView.image = UIImage(systemName: "music.note")
-        artworkImageView.tintColor = .gray
+        let placeholder = UIImage(systemName: "music.note")
         
         if let urlString = track.artworkUrl100,
-           let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.artworkImageView.image = image
-                    }
-                }
-            }.resume()
+            let url = URL(string: urlString) {
+            artworkImageView.kf.setImage(
+                with: url,
+                placeholder: placeholder,
+                options: [.transition(.fade(0.2))]
+            )
+        } else {
+            artworkImageView.image = placeholder
+            artworkImageView.tintColor = .gray
         }
     }
     
